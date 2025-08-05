@@ -138,12 +138,12 @@
         <h2>91 Club Prediction</h2>
 
         <div class="input-container">
-            <input type="tel" maxlength="1" oninput="moveNext(0)" onkeydown="moveBack(event, 0)" id="digit1">
-            <input type="tel" maxlength="1" oninput="moveNext(1)" onkeydown="moveBack(event, 1)" id="digit2">
-            <input type="tel" maxlength="1" oninput="moveNext(2)" onkeydown="moveBack(event, 2)" id="digit3">
-            <input type="tel" maxlength="1" oninput="moveNext(3)" onkeydown="moveBack(event, 3)" id="digit4">
-            <input type="tel" maxlength="1" oninput="moveNext(4)" onkeydown="moveBack(event, 4)" id="digit5">
-            <input type="tel" maxlength="1" oninput="moveNext(5)" onkeydown="moveBack(event, 5)" id="digit6">
+            <input type="tel" maxlength="1" oninput="moveNext(0)" onkeydown="moveBack(event, 0)" id="digit0">
+            <input type="tel" maxlength="1" oninput="moveNext(1)" onkeydown="moveBack(event, 1)" id="digit1">
+            <input type="tel" maxlength="1" oninput="moveNext(2)" onkeydown="moveBack(event, 2)" id="digit2">
+            <input type="tel" maxlength="1" oninput="moveNext(3)" onkeydown="moveBack(event, 3)" id="digit3">
+            <input type="tel" maxlength="1" oninput="moveNext(4)" onkeydown="moveBack(event, 4)" id="digit4">
+            <input type="tel" maxlength="1" oninput="moveNext(5)" onkeydown="moveBack(event, 5)" id="digit5">
         </div>
 
         <div class="number-pad">
@@ -166,9 +166,15 @@
     </div>
 
     <script>
-        const patterns = {
-            "957682": "B", "182217": "S", "441272": "B", "375048": "S"
-        };
+        let patterns = {};
+
+        fetch('patterns.json')
+            .then(res => res.json())
+            .then(data => patterns = data)
+            .catch(err => {
+                console.error("Error loading patterns:", err);
+                document.getElementById("result").innerText = "Error loading patterns!";
+            });
 
         let currentIndex = 0;
 
@@ -228,7 +234,6 @@
                 : "Pattern not found!";
         }
 
-        // Snow effect
         function createSnowflakes() {
             for (let i = 0; i < 40; i++) {
                 let snowflake = document.createElement("div");
